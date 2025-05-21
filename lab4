@@ -1,0 +1,48 @@
+# Hint to plot contours for tasks 2 and 3
+#check np.linspace, np.meshgrid, reshape, ax.contour to plot this
+#general idea for plotting is to get a grid of 2d points using linspace and meshgrid, apply the same transformation as X, compute dot product with theta to get the z part in ax.contour
+#reference -> https://matplotlib.org/stable/api/_as_gen/matplotlib.axes.Axes.contour.html
+
+
+
+def visualize_data(df, question, theta=None):
+    """
+    function to plot data points and decision boundaries
+    """
+    plt.figure(figsize=(7,5))
+    ax = sns.scatterplot(x='X1', y='X2', hue='label', data=df, style='label', s=80)
+    plt.title('Scatter plot of training data')
+
+    #Question wise code to plot decision boundaries
+    if question==1:
+        # Add code to plot a line
+
+    elif question==2:
+        u = np.linspace(0, 1.0, 50)
+        v = np.linspace(0, 1.0, 50)
+
+        U, V = np.meshgrid(u, v)
+        X1X2 = U * V
+
+        df = pd.DataFrame({'X1': U.flatten(), 'X2': V.flatten(), 'X1X2': X1X2.flatten()})
+        m = len(df)
+        X = np.hstack((np.ones((m, 1)), df[['X1', 'X2', 'X1X2']].values))
+        z = X.dot(theta)
+        Z = z.reshape(U.shape)
+
+        ax.contour(u, v, Z, levels=[0], colors='green')
+
+    elif question==3:
+        u = np.linspace(-1, 1.5, 50)
+        v = np.linspace(-1, 1.5, 50)
+
+        U, V = np.meshgrid(u, v)
+        UV_matrix = np.column_stack((U.flatten(), V.flatten()))
+        z_flat = np.dot(map_feature_vectorized(UV_matrix[:, 0], UV_matrix[:, 1], 6), theta)
+        Z = z_flat.reshape(U.shape)
+
+        ax.contour(U, V, Z, levels=[0], colors='green')
+
+    path = "plot_"+str(question)+".png"
+    plt.savefig(path)
+    print("Data plot saved at: ", path)
