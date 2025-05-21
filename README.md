@@ -41,8 +41,5 @@ Project repository: [Movie Recommendation System](https://github.com/VennelaY/CS
 
 ---
 
-## 🔗 Related Repository
-
-All scribes and lab submissions are available here:  
-[GitHub – SriNithya2004/AIML](https://github.com/SriNithya2004/AIML.git)
-
+## 🔗
+https://github.com/srush/Tensor-Puzzles
